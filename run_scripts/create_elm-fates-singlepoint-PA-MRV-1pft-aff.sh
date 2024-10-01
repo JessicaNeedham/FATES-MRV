@@ -6,28 +6,32 @@ export COMPSET=2000_DATM%QIA_ELM%BGC-FATES_SICE_SOCN_SROF_SGLC_SWAV
 export RES=ELM_USRDAT                                
 export MACH=pm-cpu                                             # Name your machine
 export COMPILER=gnu                                            # Name your compiler
-export SITE=PA                                        # Name your site
-export PARAM_FILES=/pscratch/sd/j/jneedham/FATES-MRV/param_files
+export PROJECT=e3sm
 
-export TAG=fates-MRV-${SITE}-aff  # give your run a name
+export SITE=PA                                        # Name your site
+export PARAM_FILES=/global/homes/j/jneedham/FATES-MRV/param_files
+
+export TAG=fates-MRV-${SITE}-aff-full  # give your run a name
 export CASE_ROOT=/pscratch/sd/j/jneedham/fates-mrv-runs/runs  # where in scratch should the run go?
+
+
 
 # this whole section needs to be updated with the location of your surface and domain files
 export SITE_BASE_DIR=/pscratch/sd/j/jneedham/fates-mrv-runs
 export ELM_USRDAT_DOMAIN=domain_${SITE}.nc
 export ELM_USRDAT_SURDAT=surf_${SITE}.nc
-export ELM_SURFDAT_DIR=${SITE_BASE_DIR}/surfdomain
-export ELM_DOMAIN_DIR=${SITE_BASE_DIR}/surfdomain
-export DIN_LOC_ROOT_FORCE=${SITE_BASE_DIR}/climate-forcing/PA/ERA5/corr
+export ELM_SURFDAT_DIR=${SITE_BASE_DIR}/${SITE}
+export ELM_DOMAIN_DIR=${SITE_BASE_DIR}/${SITE}
+export DIN_LOC_ROOT_FORCE=${SITE_BASE_DIR}
 
 # climate data will recycle data between these years
 export DATM_START=1980
-export DATM_STOP=2023
+export DATM_STOP=2022
 
 
 # DEPENDENT PATHS AND VARIABLES (USER MIGHT CHANGE THESE..)
 # =======================================================================================
-export SOURCE_DIR=/E3SM/cime/scripts  # change to the path where your E3SM/cime/sripts is
+export SOURCE_DIR=/global/homes/j/jneedham/E3SM/cime/scripts  # change to the path where your E3SM/cime/sripts is
 cd ${SOURCE_DIR}
 
 export CIME_HASH=`git log -n 1 --pretty=%h`
@@ -100,19 +104,19 @@ cd ${CASE_NAME}
 # =================================================================================
 
 ./xmlchange DEBUG=FALSE
-./xmlchange STOP_N=5 # how many years should the simulation run
+./xmlchange STOP_N=100 # how many years should the simulation run
 ./xmlchange RUN_STARTDATE='1900-01-01'
 ./xmlchange STOP_OPTION=nyears
-./xmlchange REST_N=5 # how often to make restart files
-./xmlchange RESUBMIT=0 # how many resubmits 
+./xmlchange REST_N=25 # how often to make restart files
+./xmlchange RESUBMIT=4 # how many resubmits 
 
 ./xmlchange DATM_CLMNCEP_YR_START=${DATM_START}
 ./xmlchange DATM_CLMNCEP_YR_END=${DATM_STOP}
 
-#./xmlchange JOB_WALLCLOCK_TIME=08:59:00
-./xmlchange JOB_WALLCLOCK_TIME=00:29:00
-#./xmlchange JOB_QUEUE=shared
-./xmlchange JOB_QUEUE=debug
+./xmlchange JOB_WALLCLOCK_TIME=08:59:00
+#./xmlchange JOB_WALLCLOCK_TIME=00:29:00
+./xmlchange JOB_QUEUE=shared
+#./xmlchange JOB_QUEUE=debug
 ./xmlchange SAVE_TIMING=FALSE
 
 
@@ -129,24 +133,22 @@ cd ${CASE_NAME}
 # add any history variables you want 
 cat >> user_nl_elm <<EOF
 fsurdat = '${ELM_SURFDAT_DIR}/${ELM_USRDAT_SURDAT}'
-fates_paramfile='${PARAM_FILES}/fates_params_PA_1pft.nc'
+fates_paramfile='${PARAM_FILES}/fates_params_1pft_pa.nc'
 use_fates=.true.
 use_fates_nocomp=.false.
 use_fates_logging=.false.
 use_fates_inventory_init = .false.
 fluh_timeseries=''
 hist_fincl1=
-'FATES_VEGC_PF', 'FATES_VEGC_ABOVEGROUND', 
+'FATES_VEGC', 'FATES_VEGC_ABOVEGROUND', 
 'FATES_NPLANT_SZ', 'FATES_CROWNAREA_PF', 
 'FATES_LAI', 'FATES_BASALAREA_SZPF', 'FATES_CA_WEIGHTED_HEIGHT', 'Z0MG',
 'FATES_MORTALITY_CSTARV_CFLUX_PF', 'FATES_MORTALITY_CFLUX_PF',
-'FATES_MORTALITY_HYDRO_CFLUX_PF', 'FATES_MORTALITY_BACKGROUND_SZPF',
-'FATES_MORTALITY_HYDRAULIC_SZPF', 'FATES_MORTALITY_CSTARV_SZPF',
-'FATES_MORTALITY_IMPACT_SZPF', 'FATES_MORTALITY_TERMINATION_SZPF',
-'FATES_MORTALITY_FREEZING_SZPF', 'FATES_MORTALITY_CANOPY_SZPF',
-'FATES_MORTALITY_USTORY_SZPF', 'FATES_NPLANT_SZPF',
-'FATES_NPLANT_CANOPY_SZPF', 'FATES_NPLANT_USTORY_SZPF',
-'FATES_NPP_PF', 'FATES_GPP_PF', 'FATES_NEP', 'FATES_FIRE_CLOSS',
+'FATES_MORTALITY_HYDRO_CFLUX_PF', 'FATES_MORTALITY_BACKGROUND_SZ',
+'FATES_MORTALITY_HYDRAULIC_SZ', 'FATES_MORTALITY_CSTARV_SZ',
+'FATES_MORTALITY_IMPACT_SZ', 'FATES_MORTALITY_TERMINATION_SZ',
+'FATES_MORTALITY_FREEZING_SZ', 
+'FATES_NPP', 'FATES_GPP', 'FATES_NEP', 'FATES_FIRE_CLOSS',
 'FATES_ABOVEGROUND_PROD_SZPF', 'FATES_ABOVEGROUND_MORT_SZPF', 
 'FATES_NPLANT_CANOPY_SZ', 'FATES_NPLANT_USTORY_SZ', 
 'FATES_DDBH_CANOPY_SZ', 'FATES_DDBH_USTORY_SZ', 
@@ -162,8 +164,8 @@ EOF
 ./preview_namelists
  
 # Make change to datm stream field info variable names (specific for this tutorial) - DO NOT CHANGE
-#CLM1PTFILE="run/datm.streams.txt.CLM1PT.ELM_USRDAT"
-#sed -i '/ZBOT/d' ${CLM1PTFILE}
+CLM1PTFILE="run/datm.streams.txt.CLM1PT.ELM_USRDAT"
+sed -i '/ZBOT/d' ${CLM1PTFILE}
 #sed -i '/RH/d' ${CLM1PTFILE}
 #sed -i '/FLDS/a QBOT shum' ${CLM1PTFILE}
 
