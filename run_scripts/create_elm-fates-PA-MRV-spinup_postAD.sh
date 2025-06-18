@@ -10,10 +10,10 @@ export COMPILER=gnu                                            # Name your compi
 export PROJECT=e3sm
 
 export SITE=PA                                        # Name your site
-export PARAM_FILES=/global/homes/j/jneedham/FATES-MRV/param_files/v5
+export PARAM_FILES=/global/homes/j/jneedham/FATES-MRV/param_files/v6
 
-export TAG=PA_post_AD_spinup_v5  # give your run a name
-export CASE_ROOT=/pscratch/sd/j/jneedham/fates-mrv-runs/runs  # where in scratch should the run go?
+export TAG=PA_post_AD_spinup  # give your run a name
+export CASE_ROOT=/pscratch/sd/j/jneedham/fates-mrv-runs/runs/v6  # where in scratch should the run go?
 
 # this whole section needs to be updated with the location of your surface and domain files
 export SITE_BASE_DIR=/pscratch/sd/j/jneedham/fates-mrv-runs
@@ -141,9 +141,9 @@ cd ${CASE_NAME}
 # add any history variables you want 
 cat >> user_nl_elm <<EOF
 fsurdat = '${ELM_SURFDAT_DIR}/${ELM_USRDAT_SURDAT}'
-fates_paramfile='${PARAM_FILES}/fates_params_2pfts_PA_nat_v5.nc'
+fates_paramfile='${PARAM_FILES}/fates_params_PA_nat_v12.nc'
 paramfile='/global/homes/j/jneedham/FATES-MRV/param_files/elm_params/MRV_elm_params.nc'
-finidat='/pscratch/sd/j/jneedham/fates-mrv-runs/runs/PA_AD_spinup_v5.Ea435e8dd8c-Fea425ee7.2025-05-13/run/PA_AD_spinup_v5.Ea435e8dd8c-Fea425ee7.2025-05-13.elm.r.0101-01-01-00000.nc'
+finidat='/pscratch/sd/j/jneedham/fates-mrv-runs/runs/v6/PA_AD_spinup_v6_v12.Ea8fbc2fc28-Ff46de7a5.2025-06-16/run/PA_AD_spinup_v6_v12.Ea8fbc2fc28-Ff46de7a5.2025-06-16.elm.r.0101-01-01-00000.nc'
 use_fates=.true.
 use_fates_nocomp=.false.
 use_fates_inventory_init = .false.
@@ -177,7 +177,8 @@ hist_fincl1=
 'FATES_CANOPYAREA_AP', 'FATES_VEGC_APPF', 'FATES_PATCHAREA_AP',
 'FATES_RECRUITMENT_PF', 'SOILC', 'FATES_SEEDS_IN_LOCAL', 
 'FATES_SEEDS_IN', 'FATES_SEED_BANK', 'FATES_LITTER_IN', 'FATES_LITTER_OUT',
-'FATES_UNGERM_SEED_BANK', 'FATES_SEEDLING_POOL', 'FATES_REFORESTATION_PF'
+'FATES_UNGERM_SEED_BANK', 'FATES_SEEDLING_POOL', 'FATES_REFORESTATION_PF', 
+'FATES_VEGC_APPF'
 EOF
 
 

@@ -9,10 +9,10 @@ export COMPILER=gnu                                            # Name your compi
 export PROJECT=e3sm
 
 export SITE=PA                                        # Name your site
-export PARAM_FILES=/global/homes/j/jneedham/FATES-MRV/param_files/v5
+export PARAM_FILES=/global/homes/j/jneedham/FATES-MRV/param_files/v6
 
-export TAG=PA_ssp1_nat_regrowth_test  # give your run a name
-export CASE_ROOT=/pscratch/sd/j/jneedham/fates-mrv-runs/runs  # where in scratch should the run go?
+export TAG=PA_ssp1_nat_regrowth  # give your run a name
+export CASE_ROOT=/pscratch/sd/j/jneedham/fates-mrv-runs/runs/v6  # where in scratch should the run go?
 
 # this whole section needs to be updated with the location of your surface and domain files
 export SITE_BASE_DIR=/pscratch/sd/j/jneedham/fates-mrv-runs/climate-forcing/PA/ssp1_corr
@@ -23,8 +23,8 @@ export ELM_DOMAIN_DIR=${SITE_BASE_DIR}/${SITE}
 export DIN_LOC_ROOT_FORCE=${SITE_BASE_DIR}
 
 # climate data will recycle data between these years
-export DATM_START=2022
-export DATM_STOP=2040
+export DATM_START=2020
+export DATM_STOP=2100
 
 
 # DEPENDENT PATHS AND VARIABLES (USER MIGHT CHANGE THESE..)
@@ -111,10 +111,10 @@ cd ${CASE_NAME}
 ./xmlchange DATM_CLMNCEP_YR_START=${DATM_START}
 ./xmlchange DATM_CLMNCEP_YR_END=${DATM_STOP}
 
-#./xmlchange JOB_WALLCLOCK_TIME=14:59:00
-./xmlchange JOB_WALLCLOCK_TIME=00:29:00
-#./xmlchange JOB_QUEUE=shared
-./xmlchange JOB_QUEUE=debug
+./xmlchange JOB_WALLCLOCK_TIME=14:59:00
+#./xmlchange JOB_WALLCLOCK_TIME=00:29:00
+./xmlchange JOB_QUEUE=shared
+#./xmlchange JOB_QUEUE=debug
 #./xmlchange JOB_QUEUE=regular
 ./xmlchange SAVE_TIMING=FALSE
 
@@ -135,7 +135,7 @@ cd ${CASE_NAME}
 # add any history variables you want 
 cat >> user_nl_elm <<EOF
 fsurdat = '${ELM_SURFDAT_DIR}/${ELM_USRDAT_SURDAT}'
-fates_paramfile='${PARAM_FILES}/fates_params_2pfts_PA_nat_v5.nc'
+fates_paramfile='${PARAM_FILES}/fates_params_PA_nat_v12.nc'
 use_fates=.true.
 use_fates_nocomp=.false.
 use_fates_inventory_init = .false.
@@ -149,7 +149,7 @@ suplphos='ALL'
 suplnitro='ALL'
 fates_parteh_mode=2
 nu_com='RD'
-finidat='/pscratch/sd/j/jneedham/fates-mrv-runs/runs/PA_logging-mine_phase.Ea8fbc2fc28-F7aa80c14.2025-06-06/run/PA_logging-mine_phase.Ea8fbc2fc28-F7aa80c14.2025-06-06.elm.r.2020-01-01-00000.nc'
+finidat=''
 hist_fincl1=
 'FATES_VEGC_PF', 'FATES_VEGC_ABOVEGROUND_SZPF', 
 'FATES_NPLANT_SZPF', 'FATES_CROWNAREA_PF', 
@@ -170,7 +170,8 @@ hist_fincl1=
 'FATES_CANOPYAREA_AP', 'FATES_VEGC_APPF', 'FATES_PATCHAREA_AP',
 'FATES_RECRUITMENT_PF', 'SOILC', 'FATES_SEEDS_IN_LOCAL', 
 'FATES_SEEDS_IN', 'FATES_SEED_BANK', 'FATES_LITTER_IN', 'FATES_LITTER_OUT',
-'FATES_UNGERM_SEED_BANK', 'FATES_SEEDLING_POOL', 'FATES_REFORESTATION_PF'
+'FATES_UNGERM_SEED_BANK', 'FATES_SEEDLING_POOL', 'FATES_REFORESTATION_PF', 
+'FATES_VEGC_APPF'
 EOF
 
 

@@ -9,10 +9,10 @@ export COMPILER=gnu                                            # Name your compi
 export PROJECT=e3sm
 
 export SITE=PA                                        # Name your site
-export PARAM_FILES=/global/homes/j/jneedham/FATES-MRV/param_files/v5
+export PARAM_FILES=/global/homes/j/jneedham/FATES-MRV/param_files/v6
 
 export TAG=PA_ssp1_reforest  # give your run a name
-export CASE_ROOT=/pscratch/sd/j/jneedham/fates-mrv-runs/runs  # where in scratch should the run go?
+export CASE_ROOT=/pscratch/sd/j/jneedham/fates-mrv-runs/runs/v6  # where in scratch should the run go?
 
 # this whole section needs to be updated with the location of your surface and domain files
 export SITE_BASE_DIR=/pscratch/sd/j/jneedham/fates-mrv-runs/climate-forcing/PA/ssp1_corr
@@ -102,8 +102,8 @@ cd ${CASE_NAME}
 # =================================================================================
 
 ./xmlchange DEBUG=FALSE
-./xmlchange STOP_N=78 # how many years should the simulation run
-./xmlchange RUN_STARTDATE='2022-01-01'
+./xmlchange STOP_N=80 # how many years should the simulation run
+./xmlchange RUN_STARTDATE='2020-01-01'
 ./xmlchange STOP_OPTION=nyears
 ./xmlchange REST_N=20 # how often to make restart files
 ./xmlchange RESUBMIT=0 # how many resubmits 
@@ -142,14 +142,14 @@ use_fates_inventory_init = .false.
 fates_radiation_model='twostream'
 fates_leafresp_model='atkin2017'
 use_fates_daylength_factor=.true.
-use_fates_reforestation=.false.
+use_fates_reforestation=.true.
 use_century_decomp=.true.
 spinup_state=0
 suplphos='ALL'
 suplnitro='ALL'
 fates_parteh_mode=2
 nu_com='RD'
-finidat='/pscratch/sd/j/jneedham/fates-mrv-runs/runs/PA_logging-mine_phase.Ea8fbc2fc28-F7aa80c14.2025-06-06/run/PA_logging-mine_phase.Ea8fbc2fc28-F7aa80c14.2025-06-06.elm.r.2020-01-01-00000.nc'
+finidat=''
 hist_fincl1=
 'FATES_VEGC_PF', 'FATES_VEGC_ABOVEGROUND_SZPF', 
 'FATES_NPLANT_SZPF', 'FATES_CROWNAREA_PF', 
@@ -170,7 +170,8 @@ hist_fincl1=
 'FATES_CANOPYAREA_AP', 'FATES_VEGC_APPF', 'FATES_PATCHAREA_AP',
 'FATES_RECRUITMENT_PF', 'SOILC', 'FATES_SEEDS_IN_LOCAL', 
 'FATES_SEEDS_IN', 'FATES_SEED_BANK', 'FATES_LITTER_IN', 'FATES_LITTER_OUT',
-'FATES_UNGERM_SEED_BANK', 'FATES_SEEDLING_POOL', 'FATES_REFORESTATION_PF'
+'FATES_UNGERM_SEED_BANK', 'FATES_SEEDLING_POOL', 'FATES_REFORESTATION_PF', 
+'FATES_SEED_ALLOC_CANOPY_SZ', 'FATES_SEED_ALLOC_USTORY_SZ', 'FATES_VEGC_APPF'
 EOF
 
 

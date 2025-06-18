@@ -10,10 +10,10 @@ export COMPILER=gnu                                            # Name your compi
 export PROJECT=e3sm
 
 export SITE=PA                                        # Name your site
-export PARAM_FILES=/global/homes/j/jneedham/FATES-MRV/param_files/v5
+export PARAM_FILES=/global/homes/j/jneedham/FATES-MRV/param_files/v6
 
-export TAG=PA_AD_spinup_v5  # give your run a name
-export CASE_ROOT=/pscratch/sd/j/jneedham/fates-mrv-runs/runs  # where in scratch should the run go?
+export TAG=PA_AD_spinup_v6_v12  # give your run a name
+export CASE_ROOT=/pscratch/sd/j/jneedham/fates-mrv-runs/runs/v6  # where in scratch should the run go?
 
 # this whole section needs to be updated with the location of your surface and domain files
 export SITE_BASE_DIR=/pscratch/sd/j/jneedham/fates-mrv-runs
@@ -106,7 +106,7 @@ cd ${CASE_NAME}
 ./xmlchange STOP_N=100 # how many years should the simulation run
 ./xmlchange RUN_STARTDATE='0001-01-01'
 ./xmlchange STOP_OPTION=nyears
-./xmlchange REST_N=10 # how often to make restart files
+./xmlchange REST_N=25 # how often to make restart files
 ./xmlchange RESUBMIT=0 # how many resubmits 
 
 ./xmlchange DATM_CLMNCEP_YR_START=${DATM_START}
@@ -141,7 +141,7 @@ cd ${CASE_NAME}
 # add any history variables you want 
 cat >> user_nl_elm <<EOF
 fsurdat = '${ELM_SURFDAT_DIR}/${ELM_USRDAT_SURDAT}'
-fates_paramfile='${PARAM_FILES}/fates_params_2pfts_PA_nat_v5.nc'
+fates_paramfile='${PARAM_FILES}/fates_params_PA_nat_v12.nc'
 paramfile='/global/homes/j/jneedham/FATES-MRV/param_files/elm_params/MRV_elm_params.nc'
 use_fates=.true.
 use_fates_nocomp=.false.
@@ -176,7 +176,8 @@ hist_fincl1=
 'FATES_CANOPYAREA_AP', 'FATES_VEGC_APPF', 'FATES_PATCHAREA_AP',
 'FATES_RECRUITMENT_PF', 'SOILC', 'FATES_SEEDS_IN_LOCAL', 
 'FATES_SEEDS_IN', 'FATES_SEED_BANK', 'FATES_LITTER_IN', 'FATES_LITTER_OUT',
-'FATES_UNGERM_SEED_BANK', 'FATES_SEEDLING_POOL', 'FATES_REFORESTATION_PF'
+'FATES_UNGERM_SEED_BANK', 'FATES_SEEDLING_POOL', 'FATES_REFORESTATION_PF', 
+'FATES_VEGC_APPF'
 EOF
 
 
